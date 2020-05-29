@@ -23,7 +23,10 @@ func TestCustomTime_MarshalUnmarshalXML(t *testing.T) {
 	type Element struct {
 		CreatedAt CustomTime `xml:""`
 	}
-	e := Element{CustomTime(time.Date(0, 1, 1, 13, 37, 0, 0, time.UTC))}
+	d := CustomTime(time.Date(0, 1, 1, 13, 37, 0, 0, time.UTC))
+	// or just use:
+	// d, _ := NewCustomTime("10•11•2009")
+	e := Element{d}
 
 	want := `<Element><CreatedAt>13:37</CreatedAt></Element>`
 	got, err := xml.Marshal(e)
@@ -46,7 +49,8 @@ func TestCustomTime_MarshalUnmarshalXMLAttr(t *testing.T) {
 	type Element struct {
 		Created CustomTime `xml:"created_at,attr"`
 	}
-	e := Element{CustomTime(time.Date(0, 1, 1, 13, 37, 0, 0, time.UTC))}
+	d, _ := NewCustomTime("13:37")
+	e := Element{d}
 
 	want := `<Element created_at="13:37"></Element>`
 	got, err := xml.Marshal(e)
@@ -70,7 +74,8 @@ func TestCustomTime_MarshalUnmarshalText(t *testing.T) {
 	type Element struct {
 		CreatedAt CustomTime `xml:",chardata"`
 	}
-	e := Element{CustomTime(time.Date(0, 1, 1, 13, 37, 0, 0, time.UTC))}
+	d, _ := NewCustomTime("13:37")
+	e := Element{d}
 
 	want := `<Element>13:37</Element>`
 	got, err := xml.Marshal(e)
@@ -94,7 +99,8 @@ func TestCustomTime_MarshalUnmarshalTextCDATA(t *testing.T) {
 	type Element struct {
 		CreatedAt CustomTime `xml:",cdata"`
 	}
-	e := Element{CustomTime(time.Date(0, 1, 1, 13, 37, 0, 0, time.UTC))}
+	d, _ := NewCustomTime("13:37")
+	e := Element{d}
 
 	want := `<Element><![CDATA[13:37]]></Element>`
 	got, err := xml.Marshal(e)
@@ -118,7 +124,8 @@ func TestCustomTime_MarshalUnmarshalJSON(t *testing.T) {
 	type Element struct {
 		CreatedAt CustomTime `json:"created_at"`
 	}
-	e := Element{CustomTime(time.Date(0, 1, 1, 13, 37, 0, 0, time.UTC))}
+	d, _ := NewCustomTime("13:37")
+	e := Element{d}
 
 	want := `{"created_at":"13:37"}`
 	got, err := json.Marshal(e)
@@ -142,7 +149,8 @@ func TestCustomTime_MarshalUnmarshalYAML(t *testing.T) {
 	type Element struct {
 		CreatedAt CustomTime `yaml:"created_at"`
 	}
-	e := Element{CustomTime(time.Date(0, 1, 1, 13, 37, 0, 0, time.UTC))}
+	d, _ := NewCustomTime("13:37")
+	e := Element{d}
 
 	want := "created_at: \"13:37\"\n"
 	got, err := yaml.Marshal(e)

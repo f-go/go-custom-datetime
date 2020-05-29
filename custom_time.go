@@ -17,6 +17,12 @@ type CustomTime time.Time
 // Format of customised time values.
 var CustomTimeFormat = "15:04:05"
 
+// Parses the given value and returns a CustomDate instance.
+func NewCustomTime(value string) (CustomTime, error) {
+	d, err := time.Parse(CustomTimeFormat, value)
+	return CustomTime(d), err
+}
+
 
 func (d CustomTime) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(time.Time(d).Format(CustomTimeFormat), start)

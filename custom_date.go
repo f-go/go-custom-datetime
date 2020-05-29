@@ -17,6 +17,12 @@ type CustomDate time.Time
 // Format of customised date values.
 var CustomDateFormat = "2006-01-02"
 
+// Parses the given value and returns a CustomDate instance.
+func NewCustomDate(value string) (CustomDate, error) {
+	d, err := time.Parse(CustomDateFormat, value)
+	return CustomDate(d), err
+}
+
 
 func (d CustomDate) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return e.EncodeElement(time.Time(d).Format(CustomDateFormat), start)

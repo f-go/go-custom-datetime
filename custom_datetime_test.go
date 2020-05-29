@@ -23,7 +23,10 @@ func TestCustomDateTime_MarshalUnmarshalXML(t *testing.T) {
 	type Element struct {
 		CreatedAt CustomDateTime `xml:""`
 	}
-	e := Element{CustomDateTime(time.Date(2009, 11, 10, 13, 37, 0, 0, time.UTC))}
+	dt := CustomDateTime(time.Date(2009, 11, 10, 13, 37, 0, 0, time.UTC))
+	// or just use:
+	// dt, _ := NewCustomDateTime("10•11•2009 13:37")
+	e := Element{dt}
 
 	want := `<Element><CreatedAt>10•11•2009 13:37</CreatedAt></Element>`
 	got, err := xml.Marshal(e)
@@ -47,7 +50,8 @@ func TestCustomDateTime_MarshalUnmarshalXMLAttr(t *testing.T) {
 	type Element struct {
 		Created CustomDateTime `xml:"created_at,attr"`
 	}
-	e := Element{CustomDateTime(time.Date(2009, 11, 10, 13, 37, 0, 0, time.UTC))}
+	dt, _ := NewCustomDateTime("10•11•2009 13:37")
+	e := Element{dt}
 
 	want := `<Element created_at="10•11•2009 13:37"></Element>`
 	got, err := xml.Marshal(e)
@@ -71,7 +75,8 @@ func TestCustomDateTime_MarshalUnmarshalText(t *testing.T) {
 	type Element struct {
 		CreatedAt CustomDateTime `xml:",chardata"`
 	}
-	e := Element{CustomDateTime(time.Date(2009, 11, 10, 13, 37, 0, 0, time.UTC))}
+	dt, _ := NewCustomDateTime("10•11•2009 13:37")
+	e := Element{dt}
 
 	want := `<Element>10•11•2009 13:37</Element>`
 	got, err := xml.Marshal(e)
@@ -95,7 +100,8 @@ func TestCustomDateTime_MarshalUnmarshalTextCDATA(t *testing.T) {
 	type Element struct {
 		CreatedAt CustomDateTime `xml:",cdata"`
 	}
-	e := Element{CustomDateTime(time.Date(2009, 11, 10, 13, 37, 0, 0, time.UTC))}
+	dt, _ := NewCustomDateTime("10•11•2009 13:37")
+	e := Element{dt}
 
 	want := `<Element><![CDATA[10•11•2009 13:37]]></Element>`
 	got, err := xml.Marshal(e)
@@ -119,7 +125,8 @@ func TestCustomDateTime_MarshalUnmarshalJSON(t *testing.T) {
 	type Element struct {
 		CreatedAt CustomDateTime `json:"created_at"`
 	}
-	e := Element{CustomDateTime(time.Date(2009, 11, 10, 13, 37, 0, 0, time.UTC))}
+	dt, _ := NewCustomDateTime("10•11•2009 13:37")
+	e := Element{dt}
 
 	want := `{"created_at":"10•11•2009 13:37"}`
 	got, err := json.Marshal(e)
@@ -143,7 +150,8 @@ func TestCustomDateTime_MarshalUnmarshalYAML(t *testing.T) {
 	type Element struct {
 		CreatedAt CustomDateTime `yaml:"created_at"`
 	}
-	e := Element{CustomDateTime(time.Date(2009, 11, 10, 13, 37, 0, 0, time.UTC))}
+	dt, _ := NewCustomDateTime("10•11•2009 13:37")
+	e := Element{dt}
 
 	want := "created_at: 10•11•2009 13:37\n"
 	got, err := yaml.Marshal(e)
